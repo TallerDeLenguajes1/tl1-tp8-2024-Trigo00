@@ -25,20 +25,24 @@ namespace misClases // Es un agrupador logico de clases
         }
         public void Dividir(double termino)
         {
-            if(termino != 0)
+            if (termino != 0)
             {
                 dato /= termino;
-            }else{
+            }
+            else
+            {
                 throw new DivideByZeroException("No se puede dividir por cero.");
             }
         }
-        public void Limpiar(){
+        public void Limpiar()
+        {
             dato = 0;
         }
 
-        public double Resultado{
+        public double Resultado
+        {
             get => dato;//Sirve para mostrar, pero no para escribir o modificar, para eso esta el set
-            set => dato = value; 
+            set => dato = value;
         }
     }
 
@@ -65,7 +69,7 @@ namespace misClases // Es un agrupador logico de clases
         }
 
         public double NuevoValor { get => nuevoValor; }
-        public double ResultadoAnterior { get => resultadoAnterior;}
+        public double ResultadoAnterior { get => resultadoAnterior; }
 
         public static void MostrarOperaciones(List<Operacion> lista)
         {
@@ -76,7 +80,21 @@ namespace misClases // Es un agrupador logico de clases
                 Console.WriteLine("Operacion: " + operacion.operacion);
                 Console.WriteLine("Resultado anterior: " + operacion.ResultadoAnterior);
                 Console.WriteLine("Nuevo resultado: " + operacion.NuevoValor);
-                Console.WriteLine("Es decir, realizaste una " + operacion.operacion + " entre " + operacion.ResultadoAnterior + " y " + (operacion.NuevoValor - operacion.ResultadoAnterior));
+                switch (operacion.operacion)
+                {
+                    case TipoOperacion.Suma:
+                        Console.WriteLine("Es decir, realizaste una " + operacion.operacion + ": " + operacion.ResultadoAnterior + " + " + (operacion.NuevoValor - operacion.ResultadoAnterior));
+                        break;
+                    case TipoOperacion.Resta:
+                        Console.WriteLine("Es decir, realizaste una " + operacion.operacion + ": " + operacion.ResultadoAnterior + " - " + (operacion.ResultadoAnterior - operacion.NuevoValor));
+                        break;
+                    case TipoOperacion.Multiplicacion:
+                        Console.WriteLine("Es decir, realizaste una " + operacion.operacion + ": " + operacion.ResultadoAnterior + " x " + (operacion.NuevoValor / operacion.ResultadoAnterior));
+                        break;
+                    case TipoOperacion.Division:
+                        Console.WriteLine("Es decir, realizaste una " + operacion.operacion + ": " + operacion.ResultadoAnterior + " / " + (operacion.ResultadoAnterior / operacion.NuevoValor));
+                        break;
+                }
                 Console.WriteLine();
                 contador++;
             }
@@ -85,4 +103,3 @@ namespace misClases // Es un agrupador logico de clases
 }
 
 
-    

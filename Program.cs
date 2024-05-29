@@ -171,7 +171,7 @@ while (repetir == 1)
                     Console.WriteLine("1) Si");
                     Console.WriteLine("2) No");
                     opcion1 = Console.ReadLine();
-                    if(opcion1 == "2")
+                    if (opcion1 == "2")
                     {
                         repetir = 0;
                     }
@@ -180,42 +180,134 @@ while (repetir == 1)
 
                 break;
             case 2:
-                Console.Write("Ingrese el numero que se restara al valor ingresado anteriormente: ");
+                string opcion2;
+
+                Console.Write("Ingrese un numero: ");
                 num1 = Console.ReadLine();
                 double.TryParse(num1, out num1Convert);
                 miCalculadora.Restar(num1Convert);
                 resultado = miCalculadora.Resultado;
                 Console.WriteLine("El resultado obtenido es: " + resultado);
+
+                if (comienzo == 0)
+                {
+                    Operacion misOperaciones = new Operacion(valorDouble, resultado, TipoOperacion.Resta);
+                    ListaResultados.Add(misOperaciones);
+                }
+                else
+                {
+                    Operacion misOperaciones = new Operacion(ListaResultados.Last().NuevoValor, resultado, TipoOperacion.Resta);
+                    ListaResultados.Add(misOperaciones);
+                }
+                miCalculadora.Resultado = resultado;
+                comienzo++;
+
+                do
+                {
+                    Console.WriteLine("Desea continuar calculando:");
+                    Console.WriteLine("1) Si");
+                    Console.WriteLine("2) No");
+                    opcion2 = Console.ReadLine();
+                    if (opcion2 == "2")
+                    {
+                        repetir = 0;
+                    }
+
+                } while (opcion2 != "1" && opcion2 != "2");
+
                 break;
             case 3:
-                Console.Write("Ingrese el numero que se multiplicara con el valor ingresado anteriormente: ");
+                string opcion3;
+
+                Console.Write("Ingrese un numero: ");
                 num1 = Console.ReadLine();
                 double.TryParse(num1, out num1Convert);
                 miCalculadora.Multiplicar(num1Convert);
                 resultado = miCalculadora.Resultado;
                 Console.WriteLine("El resultado obtenido es: " + resultado);
+
+                if (comienzo == 0)
+                {
+                    Operacion misOperaciones = new Operacion(valorDouble, resultado, TipoOperacion.Multiplicacion);
+                    ListaResultados.Add(misOperaciones);
+                }
+                else
+                {
+                    Operacion misOperaciones = new Operacion(ListaResultados.Last().NuevoValor, resultado, TipoOperacion.Multiplicacion);
+                    ListaResultados.Add(misOperaciones);
+                }
+                miCalculadora.Resultado = resultado;
+                comienzo++;
+
+                do
+                {
+                    Console.WriteLine("Desea continuar calculando:");
+                    Console.WriteLine("1) Si");
+                    Console.WriteLine("2) No");
+                    opcion3 = Console.ReadLine();
+                    if (opcion3 == "2")
+                    {
+                        repetir = 0;
+                    }
+
+                } while (opcion3 != "1" && opcion3 != "2");
                 break;
             case 4:
-                Console.Write("Ingrese el numero que dividira al valor ingresado anteriormente: ");
+                string opcion4;
+
+                Console.Write("Ingrese un numero: ");
                 num1 = Console.ReadLine();
                 double.TryParse(num1, out num1Convert);
                 miCalculadora.Dividir(num1Convert);
                 resultado = miCalculadora.Resultado;
                 Console.WriteLine("El resultado obtenido es: " + resultado);
+
+                if (comienzo == 0)
+                {
+                    Operacion misOperaciones = new Operacion(valorDouble, resultado, TipoOperacion.Division);
+                    ListaResultados.Add(misOperaciones);
+                }
+                else
+                {
+                    Operacion misOperaciones = new Operacion(ListaResultados.Last().NuevoValor, resultado, TipoOperacion.Division);
+                    ListaResultados.Add(misOperaciones);
+                }
+                miCalculadora.Resultado = resultado;
+                comienzo++;
+
+                do
+                {
+                    Console.WriteLine("Desea continuar calculando:");
+                    Console.WriteLine("1) Si");
+                    Console.WriteLine("2) No");
+                    opcion4 = Console.ReadLine();
+                    if (opcion4 == "2")
+                    {
+                        repetir = 0;
+                    }
+
+                } while (opcion4 != "1" && opcion4 != "2");
+
                 break;
             case 5:
                 miCalculadora.Limpiar();
                 Console.WriteLine("El valor fue limpiado correctamente");
                 resultado = miCalculadora.Resultado;
                 Console.WriteLine("El resultado obtenido es: " + resultado);
+                ListaResultados.Clear();
+                if (ListaResultados.Count() == 0)
+                    Console.WriteLine("El historial quedo vacio");
+                comienzo = 0;
                 break;
             case 6:
                 break;
             default:
+                Console.WriteLine("Opción no válida. Por favor, ingrese una opción válida.");
                 break;
         }
 
     } while (opcionConvert != 1 && opcionConvert != 2 && opcionConvert != 3 && opcionConvert != 4 && opcionConvert != 5 && opcionConvert != 6);
 
-    Operacion.MostrarOperaciones(ListaResultados);
+    if (ListaResultados.Count > 0)
+        Operacion.MostrarOperaciones(ListaResultados);
 }

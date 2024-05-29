@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Datos;
-
+using misClases;
+/*
 var ListaPendientes = new List<Tareas>();
 var ListaRealizados = new List<Tareas>();
 Tareas tareaAux = null;
@@ -106,13 +107,115 @@ do
 
 } while (opcion != 7);
 
-/*var tarea1 = new Tareas(1,"Ir a Simoca",20);
-var tarea2 = new Tareas(1,"Ir a Tafi del Valle",20);
-var tarea3 = new Tareas(1,"Ir a San Pedro",20);
-var tarea4 = new Tareas(1,"Ir a simoca",20);
+*/
 
-ListaPendiente.Add(tarea1);
-ListaPendiente.Add(tarea2);
-ListaPendiente.Add(tarea3);
-ListaPendiente.Add(tarea4);*/
+//////Punto 2////////
 
+var ListaResultados = new List<Operacion>();
+int comienzo = 0;
+int repetir = 1;
+
+double valorDouble;
+Console.Write("Ingrese un numero: ");
+string valor = Console.ReadLine();
+double.TryParse(valor, out valorDouble);
+Calculadora miCalculadora = new Calculadora(valorDouble);
+
+string opcion, num1;
+int opcionConvert;
+double num1Convert, resultado;
+while (repetir == 1)
+{
+    do
+    {
+        Console.WriteLine("\n");
+        Console.WriteLine("Menu Principal:");
+        Console.WriteLine("1) Sumar");
+        Console.WriteLine("2) Restar");
+        Console.WriteLine("3) Multiplicar");
+        Console.WriteLine("4) Dividir");
+        Console.WriteLine("5) Limpiar");
+        Console.WriteLine("6) Salir");
+        Console.Write("Ingrese la opcion deseada:");
+        opcion = Console.ReadLine();
+        int.TryParse(opcion, out opcionConvert);
+
+        switch (opcionConvert)
+        {
+            case 1:
+                string opcion1;
+
+                Console.Write("Ingrese un numero: ");
+                num1 = Console.ReadLine();
+                double.TryParse(num1, out num1Convert);
+                miCalculadora.Sumar(num1Convert);
+                resultado = miCalculadora.Resultado;
+                Console.WriteLine("El resultado obtenido es: " + resultado);
+
+                if (comienzo == 0)
+                {
+                    Operacion misOperaciones = new Operacion(valorDouble, resultado, TipoOperacion.Suma);
+                    ListaResultados.Add(misOperaciones);
+                }
+                else
+                {
+                    Operacion misOperaciones = new Operacion(ListaResultados.Last().NuevoValor, resultado, TipoOperacion.Suma);
+                    ListaResultados.Add(misOperaciones);
+                }
+                miCalculadora.Resultado = resultado;
+                comienzo++;
+
+                do
+                {
+                    Console.WriteLine("Desea continuar calculando:");
+                    Console.WriteLine("1) Si");
+                    Console.WriteLine("2) No");
+                    opcion1 = Console.ReadLine();
+                    if(opcion1 == "2")
+                    {
+                        repetir = 0;
+                    }
+
+                } while (opcion1 != "1" && opcion1 != "2");
+
+                break;
+            case 2:
+                Console.Write("Ingrese el numero que se restara al valor ingresado anteriormente: ");
+                num1 = Console.ReadLine();
+                double.TryParse(num1, out num1Convert);
+                miCalculadora.Restar(num1Convert);
+                resultado = miCalculadora.Resultado;
+                Console.WriteLine("El resultado obtenido es: " + resultado);
+                break;
+            case 3:
+                Console.Write("Ingrese el numero que se multiplicara con el valor ingresado anteriormente: ");
+                num1 = Console.ReadLine();
+                double.TryParse(num1, out num1Convert);
+                miCalculadora.Multiplicar(num1Convert);
+                resultado = miCalculadora.Resultado;
+                Console.WriteLine("El resultado obtenido es: " + resultado);
+                break;
+            case 4:
+                Console.Write("Ingrese el numero que dividira al valor ingresado anteriormente: ");
+                num1 = Console.ReadLine();
+                double.TryParse(num1, out num1Convert);
+                miCalculadora.Dividir(num1Convert);
+                resultado = miCalculadora.Resultado;
+                Console.WriteLine("El resultado obtenido es: " + resultado);
+                break;
+            case 5:
+                miCalculadora.Limpiar();
+                Console.WriteLine("El valor fue limpiado correctamente");
+                resultado = miCalculadora.Resultado;
+                Console.WriteLine("El resultado obtenido es: " + resultado);
+                break;
+            case 6:
+                break;
+            default:
+                break;
+        }
+
+    } while (opcionConvert != 1 && opcionConvert != 2 && opcionConvert != 3 && opcionConvert != 4 && opcionConvert != 5 && opcionConvert != 6);
+
+    Operacion.MostrarOperaciones(ListaResultados);
+}
